@@ -1,0 +1,51 @@
+### get all movies
+GET http://localhost:8004/api/movies
+
+### get movie by id
+GET http://localhost:8004/api/movies/1
+
+### delete movie by id
+DELETE http://localhost:8004/api/movies/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibG9naW4iOiJtb2RlcmF0b3IiLCJyb2xlIjoiTU9ERVJBVE9SIiwiZXhwIjoxNTg0OTI3MDQ0fQ.IhZ6_SKkCr7ye3QMl8FyaajbTKLWxG8Vhfc024915eA
+
+### search movie
+GET http://localhost:8004/api/movies/search?q=mul
+
+### add new or update by id existing movie (0 - add, 1:inf - update by id
+POST http://localhost:8004/api/movies
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibG9naW4iOiJtb2RlcmF0b3IiLCJyb2xlIjoiTU9ERVJBVE9SIiwiZXhwIjoxNTg0OTE5NDUwfQ.pSSSHM6Gsnp1vC3p0hn_bach7La3D2g4-LCL0SoriN4
+Content-Type: application/json
+
+{
+  "id": 0,
+  "title": "Black Widow (2020)",
+  "description": "Scarlett Johansson reprises her role as Natasha/Black Widow in Marvel Studios’ action-packed spy thriller “Black Widow”—the first film in Phase Four of the Marvel Cinematic Universe. Florence Pugh stars as Yelena, David Harbour as Alexei aka The Red Guardian and Rachel Weisz as Melina. Directed by Cate Shortland and produced by Kevin Feige, “Black Widow” hits U.S. theaters on May 1, 2020.",
+  "image": "files/73b5d220-d5b0-4d7a-8faf-9bda905bc6f1.jpeg",
+  "year": "2020",
+  "country": "USA",
+  "actors": [
+    "Scarlett Johansson",
+    "Florence Pugh",
+    "Robert Downey Jr.",
+    "Rachel Weisz",
+    "David Harbour",
+    "William Hurt"
+  ],
+  "genres": [
+    "superheroes",
+    "fantasy",
+    "action"
+  ],
+  "creators": [
+    "Cate Shortland",
+    "Ned Benson",
+    "Don Heck",
+    "Stan Lee",
+    "Don Rico",
+    "Jac Schaeffer"
+  ],
+  "studio": "MARVEL",
+  "ext_link": "https://movieweb.com/movie/black-widow/"
+}
+
+###
