@@ -52,12 +52,15 @@ const deleteMovieDML = `UPDATE movies SET removed = TRUE WHERE id = $1;`
 const updateMovieDML = `UPDATE movies
 SET title       = $1,
     description = $2,
-    image       = $3,
-    year        = $4,
-    country     = $5,
-    actors      = $6,
-    genres      = $7,
-    creators    = $8,
-    studio      = $9,
-    extlink     = $10
-WHERE id = $11;`
+    year        = $3,
+    country     = $4,
+    actors      = $5,
+    genres      = $6,
+    creators    = $7,
+    studio      = $8,
+    extlink     = $9
+WHERE id = $10;`
+
+const updateMovieImageDML = `UPDATE movies
+SET image = $1
+WHERE id = $2;`

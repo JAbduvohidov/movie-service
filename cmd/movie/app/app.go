@@ -53,11 +53,6 @@ func (s *Server) handleGetMovies() http.HandlerFunc {
 			log.Print(err)
 		}
 
-		if len(movies) == 0 {
-			writer.WriteHeader(http.StatusNoContent)
-			return
-		}
-
 		err = rest.WriteJSONBody(writer, &movies)
 		if err != nil {
 			log.Print(err)
@@ -129,7 +124,7 @@ func checkIfEmpty(dto movie.ResponseDTO) (ok bool, err ErrorDTO) {
 		return true, err
 	}
 
-	if strings.TrimSpace(dto.Image) == "" && len(strings.TrimSpace(dto.Image)) == 0 {
+	if dto.Id == 0 && (strings.TrimSpace(dto.Image) == "" && len(strings.TrimSpace(dto.Image)) == 0) {
 		err.Errors = append(err.Errors, "err.invalid_image")
 		return true, err
 	}

@@ -51,13 +51,8 @@ func (s *Service) AddMovie(payload *token.Payload, ctx context.Context, request 
 		return ErrPrivilege
 	}
 
-	conn, err := s.pool.Acquire(ctx)
-	if err != nil {
-		return fmt.Errorf("unable to acquire ctx: %w", err)
-	}
-
 	if request.Id == 0 {
-		_, err = conn.Exec(ctx, addMovieDML,
+		_, err = s.pool.Exec(ctx, addMovieDML,
 			request.Title,
 			request.Description,
 			request.Image,
@@ -70,10 +65,9 @@ func (s *Service) AddMovie(payload *token.Payload, ctx context.Context, request 
 			request.ExtLink,
 		)
 	} else {
-		_, err = conn.Exec(ctx, updateMovieDML,
+		_, err = s.pool.Exec(ctx, updateMovieDML,
 			request.Title,
 			request.Description,
-			request.Image,
 			request.Year,
 			request.Country,
 			request.Actors,
@@ -83,6 +77,16 @@ func (s *Service) AddMovie(payload *token.Payload, ctx context.Context, request 
 			request.ExtLink,
 			request.Id,
 		)
+		if err != nil {
+			return fmt.Errorf("unable to add movie: %w", err)
+		}
+
+		if request.Image != "" {
+			_, err = s.pool.Exec(ctx, updateMovieImageDML,
+				request.Image,
+				request.Id,
+			)
+		}
 	}
 
 	if err != nil {
@@ -91,7 +95,7 @@ func (s *Service) AddMovie(payload *token.Payload, ctx context.Context, request 
 	return nil
 }
 
-func (s *Service) GetAllMovies() (movies []ResponseDTO, err error) {
+func (s *Service) GetAllMovies() (movies []*ResponseDTO, err error) {
 	rows, err := s.pool.Query(context.Background(), getAllMoviesDML)
 	if err != nil {
 		return nil, err
@@ -116,7 +120,7 @@ func (s *Service) GetAllMovies() (movies []ResponseDTO, err error) {
 			return nil, err
 		}
 
-		movies = append(movies, movi)
+		movies = append(movies, &movi)
 	}
 
 	if err = rows.Err(); err != nil {
